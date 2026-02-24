@@ -1,2 +1,6 @@
 # OS files
 .DS_Store
+# R stuido
+.Rproj.user
+.Rhistory
+.RData
