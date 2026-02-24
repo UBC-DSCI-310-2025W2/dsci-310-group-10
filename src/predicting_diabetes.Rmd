@@ -1,0 +1,222 @@
+---
+title: "Diabetes Prediction"
+output: html_document
+---
+
+DSCI 310, group 10: Niki Duan, Vivian Pu, Nathan Sihombing, Yun Tian
+
+## A. Introduction
+### A.1 Background Information
+Diabetes is a chronic metabolic disease that affects millions of people worldwide, with significant health consequences if not properly managed. Early detection of diabetes is critical for preventing complications such as cardiovascular disease, kidney dysfunction, nerve damage, and vision problems. Women may face unique challenges related to diabetes, including an increased risk of pregnancy-related complications and a higher susceptibility to certain cancers.
+
+Accurate prediction of diabetes using clinical and demographic data can help identify individuals at risk, enabling timely interventions and better management of the disease.
+
+In this project, we aim to use statistical and machine learning methods to predict the presence of diabetes in individuals based on relevant clinical measurements and features from the dataset.
+
+### A.2 Research Question
+The question we will try to answer with this project is: "Can we predict the presence of diabetes in individuals based on clinical and demographic features?"
+
+This question sets up the possibility of conducting statistical analyses and building predictive models to determine which features are most strongly associated with diabetes and to estimate the probability of an individual having the disease.
+
+We have framed our question based on previous studies that have shown certain clinical indicators, such as high blood glucose, BMI, age, and family history, are strongly associated with diabetes risk. For example, the Pima Indian study dataset has been widely used to develop predictive models for diabetes, highlighting the role of these risk factors in disease onset (Chang et al., 2022, Roumie et al., 2020).
+
+
+### A.3 Dataset Used
+The unprocessed dataset was acquired from the UCI Machine Learning Repository and is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The version used in this project was processed by a contributor on OpenML (https://www.openml.org/search?type=data&status=active&id=43483) and contains information on blood pressure, diabetes status, and other health-related variables of females. Based on the diagnostic measurements included in the dataset, the objective is to predict whether a patient has diabetes. The dataset was selected from a larger database using several constraints. Specifically, all patients are female, 21 years of age or older, and of Pima Indian heritage.
+
+The dataset attributes are as follows:
+
+- Pregnancies: Number of pregnancies
+- Glucose: Blood glucose level
+- BloodPressure: Blood pressure measurement
+- SkinThickness: Skinfold thickness
+- Insulin: Blood insulin level
+- BMI: Body Mass Index
+- DiabetesPedigreeFunction: Diabetes pedigree function (a score indicating genetic predisposition)
+- Age: Age of the patient
+- Outcome: Final result (1 = diabetes, 0 = no diabetes)
+
+## B. EDA
+
+```{r setup, include=FALSE}
+# Go up one folder and activate the project renv
+source("../renv/activate.R")
+```
+```{r}
+# loading all the required libraries. 
+library(tidyverse)
+library(dplyr)
+library(tidymodels) 
+library(gridExtra)
+library(repr)
+library(GGally)
+options(repr.matrix.max.rows = 6)
+set.seed(1)
+```
+
+```{r}
+library(OpenML)
+# OpenML dataset ID
+dataset_id <- 43483
+
+# Download
+oml_data <- getOMLDataSet(data.id = dataset_id)
+
+# Extract as data.frame
+df <- oml_data$data
+
+head(df)
+```
+**Table 1: `df` the entire dataset, having 9 variables.**
+
+The df is already very clean with no missing values as shown below.
+
+```{r}
+colSums(is.na(df))
+
+# Columns to check if they contain 0 (which indicates missing values)
+cols <- c("Glucose","BloodPressure","SkinThickness","Insulin","BMI")
+
+# Check which columns have 0
+sapply(df[ , cols], function(x) any(x == 0))
+```
+
+```{r}
+summary(df)
+```
+**Table 2: Baseline characteristics of participants included in the diabetes dataset, presented as minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable**
+
+Dataset Overview
+- Total Observations: Not shown directly, but typical for this dataset is 768 rows.
+- Target Variable: Outcome (binary: 0 = no diabetes, 1 = diabetes).
+- Mean Outcome: 0.349. About 34.9% of the patients in the dataset have diabetes.
+
+Potential issue to address: Class Imbalance: Only ~35% of cases are diabetic, so model evaluation should consider metrics like precision, recall, or F1-score.
+
+```{r, fig.width=12, fig.height=10}
+# Ensure Outcome is a factor for coloring
+df$Outcome <- factor(df$Outcome, levels=c(0,1), labels=c("No","Yes"))
+
+# Select numeric columns and the target
+plot_df <- df %>% select(Pregnancies, Glucose, BloodPressure,
+                         SkinThickness, Insulin, BMI,
+                         DiabetesPedigreeFunction, Age, Outcome)
+
+# Generate pair plot with coloring by Outcome
+ggpairs(plot_df, 
+        aes(color = Outcome, alpha = 0.5),
+        columns = 1:8,   # numeric columns
+        upper = list(continuous = wrap("cor", size = 3)), # show correlation in upper panel
+        lower = list(continuous = "points"),
+        diag = list(continuous = "densityDiag")) +
+  theme_minimal() +
+  ggtitle("Pairwise Relationships Between Features and Outcome")
+```
+**Figure 1: Matrix of scatter plots (lower panel), density plots (diagonal), and correlation coefficients (upper panel) for the eight predictor variables in the Pima Indian Diabetes dataset. Points are color-coded by diabetes status (blue = No diabetes, red = Diabetes), with overlaid density curves showing the distribution of each variable for the two outcome groups.**
+
+The pair plot reveals that glucose concentration has the strongest association with diabetes outcome (r = 0.53, p < 0.001), followed by BMI (r = 0.29, p < 0.001), age (r = 0.27, p < 0.001), and number of pregnancies (r = 0.22, p < 0.001), while other variables such as insulin, skin thickness, blood pressure, and diabetes pedigree function show weaker but still statistically significant correlations. Notable inter-feature relationships include strong positive correlations between age and pregnancies (r = 0.54) and between BMI and skin thickness (r = 0.54), as well as moderate correlations among insulin, glucose, and BMI, indicating expected physiological links. The density plots along the diagonal further show that individuals with diabetes tend to have higher glucose levels, greater BMI, and are older compared to those without diabetes.
+
+## C. Data Analysis and modeling
+To predict diabetes status, we performed a supervised classification analysis using a random forest model in R.
+
+First, the dataset was imported into R as a data frame. The outcome variable representing diabetes status was converted to a factor to ensure that the task was treated as a classification problem rather than regression. All predictor variables were retained as features for model training.
+
+The dataset was then partitioned into training and testing subsets using an 80/20 split. Stratified sampling was applied to preserve the class distribution of the diabetes outcome variable in both subsets. This ensured that the model was trained and evaluated on representative data.
+
+A random forest classifier was trained using the training dataset. The model was fit using 500 decision trees, and the number of variables randomly sampled at each split was set to the default value (the square root of the number of predictors). Random forest was selected because it is robust to nonlinear relationships, automatically captures interactions between variables, and is less prone to overfitting compared to a single decision tree.
+
+After training, the fitted model was used to generate predictions on the held-out test dataset. These predictions were compared against the true diabetes labels to evaluate model performance.
+
+Model performance was assessed using a confusion matrix. From the confusion matrix, several evaluation metrics were calculated, including:
+
+- Accuracy, representing the proportion of correctly classified observations.
+- Precision, measuring the proportion of predicted positive cases that were truly positive.
+- Recall (sensitivity), measuring the proportion of actual positive cases correctly identified.
+- F1 score, representing the harmonic mean of precision and recall.
+
+The confusion matrix was visualized as a heatmap to provide a graphical summary of classification performance. Additionally, a summary table was created to report the accuracy, precision, recall, and F1 score of the model.
+
+All analyses were conducted in R using the randomForest and caret packages.
+
+```{r}
+# Load required libraries
+library(randomForest)
+library(caret)
+
+df$Outcome <- as.factor(df$Outcome)
+
+# split training and testing set
+train_index <- createDataPartition(df$Outcome, p = 0.8, list = FALSE)
+train_data <- df[train_index, ]
+test_data  <- df[-train_index, ]
+
+rf_model <- randomForest(
+  Outcome ~ ., 
+  data = train_data,
+  ntree = 500,
+  importance = TRUE
+)
+
+# apply the model on the test set
+predictions <- predict(rf_model, newdata = test_data)
+
+cm <- confusionMatrix(predictions, test_data$Outcome)
+cm_table <- as.data.frame(cm$table)
+
+colnames(cm_table) <- c("Prediction", "Reference", "Freq")
+
+# plot the confusion matrix
+ggplot(cm_table, aes(x = Reference, y = Prediction, fill = Freq)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Freq), size = 6) +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  labs(
+    title = "Confusion Matrix - Random Forest",
+    x = "Actual",
+    y = "Predicted"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+**Figure 2. Confusion matrix for the random forest model predicting diabetes status on the test dataset. The matrix shows the number of true positives, true negatives, false positives, and false negatives, comparing predicted classifications to the actual outcomes.**
+
+```{r}
+# Overall accuracy
+accuracy <- cm$overall["Accuracy"]
+
+# For binary classification (Positive class is usually the first level)
+precision <- cm$byClass["Precision"]
+recall    <- cm$byClass["Recall"]
+f1        <- cm$byClass["F1"]
+
+metrics_table <- data.frame(
+  Metric = c("Accuracy", "Precision", "Recall", "F1 Score"),
+  Value  = c(accuracy, precision, recall, f1)
+)
+
+metrics_table
+```
+
+**Table 3. Performance metrics for the random forest model predicting diabetes on the test dataset, including accuracy, precision, recall, and F1 score.**
+
+The model demonstrates exceptional performance with an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. The high recall (94.0%) is particularly noteworthy as it indicates the model successfully identifies 94% of actual diabetes cases, missing only 6% of positive patients. The precision of 89.5% means that when the model predicts diabetes, it is correct nearly 90% of the time, resulting in relatively few false alarms. The excellent F1 score of 91.7% confirms a strong balance between precision and recall, making this model highly reliable for both detecting diabetes and minimizing unnecessary follow ups. Overall, this model achieves a clinically useful balance suitable for diagnostic support.
+
+## D. Discussion
+
+In this analysis, we developed a random forest classification model to predict diabetes status using clinical and physiological predictors. The model demonstrated strong performance, achieving an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. Notably, the high recall indicates that the model correctly identified the vast majority of individuals with diabetes, missing only a small proportion of true cases. This is particularly important in a clinical screening context, where failing to detect true positive cases can delay diagnosis and treatment. The strong F1 score further confirms that the model maintains a well-balanced trade-off between sensitivity and precision.
+
+These results are somewhat consistent with expectations. Random forest models are known to perform well on structured clinical datasets because they can capture nonlinear relationships and interactions among variables without requiring strong parametric assumptions. Given that diabetes risk is influenced by multiple interacting factors, such as glucose levels, BMI, age, and metabolic indicators. It is reasonable that an ensemble tree-based method would achieve high predictive performance. However, the relatively high accuracy and recall observed here may also reflect characteristics of the dataset, including sample size, feature quality, and potential homogeneity within the population.
+
+The potential impact of such findings is meaningful in the context of early detection and screening. A model with high recall could support clinical decision-making by identifying high-risk individuals who may benefit from further diagnostic testing or preventive interventions. In resource-limited settings, predictive tools like this could help prioritize follow-up testing for individuals most likely to have diabetes. However, while the performance metrics are strong, this model should not be interpreted as a replacement for clinical diagnosis but rather as a supportive risk stratification tool.
+
+Importantly, the dataset used in this analysis includes only female participants. This is a significant limitation. Biological sex influences insulin sensitivity, fat distribution, hormonal regulation, and cardiovascular risk profiles, all of which contribute to diabetes development. As highlighted by Kautzky-Willer, Leutner, and Harreiter (2023), there are well-documented sex differences in the pathophysiology, risk factors, and clinical presentation of type 2 diabetes. Therefore, a model trained exclusively on female data may not generalize to males or mixed populations. Future work should incorporate sex as a biological variable and evaluate whether predictive performance differs between males and females. Sex-specific models or interaction analyses may improve both accuracy and clinical relevance.
+
+These findings raise several additional future questions. First, how would this model perform on external validation datasets from different populations or healthcare settings? Second, would incorporating additional biomarkers, such as lipid profiles or inflammatory markers, improve predictive power? Third, could more advanced ensemble methods (e.g., gradient boosting) outperform random forests in this context? Finally, beyond prediction, future studies could explore interpretability methods (e.g., feature importance ranking or SHAP values) to better understand which risk factors most strongly drive model decisions.
+
+Overall, this study demonstrates that machine learning approaches can effectively predict diabetes status using clinical data, but broader validation and consideration of sex differences are necessary before clinical implementation.
+
+## E. References 
+- “OpenML.” Openml.org, 2025, www.openml.org/search?type=data&id=43483&sort=runs&status=active.
+- Chang, V., Bailey, J., Xu, Q. A., & Sun, Z. (2022). Pima Indians diabetes mellitus classification based on machine learning (ML) algorithms. Neural computing & applications, 1–17. Advance online publication. https://doi.org/10.1007/s00521-022-07049-z
+- Roumie, C. L., Hung, A. M., Russell, G. B., Basile, J., Kreider, K. E., Nord, J., Ramsey, T. M., Rastogi, A., Sweeney, M. E., Tamariz, L., Kostis, W. J., Williams, J. S., Zias, A., Cushman, W. C., & SPRINT Research Group (2020). Blood Pressure Control and the Association With Diabetes Mellitus Incidence: Results From SPRINT Randomized Trial. Hypertension (Dallas, Tex. : 1979), 75(2), 331–338. https://doi.org/10.1161/HYPERTENSIONAHA.118.12572
+- Kautzky-Willer, A., Leutner, M., & Harreiter, J. (2023). Sex differences in type 2 diabetes. Diabetologia, 66(6), 986–1002. https://doi.org/10.1007/s00125-023-05891-x
