@@ -38,10 +38,7 @@ The dataset attributes are as follows:
 
 ## B. EDA
 
-```{r setup, include=FALSE}
-# Go up one folder and activate the project renv
-source("../renv/activate.R")
-```
+
 ```{r}
 # loading all the required libraries. 
 library(tidyverse)
