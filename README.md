@@ -54,14 +54,19 @@ Approximately 35% of individuals in the dataset are diabetic.
 ```
 .
 ├── data/
+│   └── pima_indian_diabetes.csv
 ├── src/
 │   ├── predicting_diabetes.Rmd
 │   └── predicting_diabetes.html
 ├── renv/
-├── renv.lock
+│   ├── .gitignore
+│   ├── active.R
+│   └── settings.json
 ├── .Rprofile
+├── .gitignore
+├── README.md
 ├── dsci-310-group-10.Rproj
-└── README.md
+└── renv.lock
 ```
 
 ---
