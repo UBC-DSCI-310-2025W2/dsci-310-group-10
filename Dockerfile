@@ -1,11 +1,21 @@
 FROM rocker/rstudio:4.5.2
 
-RUN apt-get update && apt-get install -y \
+RUN RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
-    build-essential \
-    git \
+    libgit2-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libtiff5-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/rstudio/project
