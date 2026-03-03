@@ -1,6 +1,6 @@
 FROM rocker/rstudio:4.5.2
 
-RUN RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     libcurl4-openssl-dev \
