@@ -53,6 +53,8 @@ Approximately 35% of individuals in the dataset are diabetic.
 
 ```
 .
+├── .github/
+│   └── docker-image.yml
 ├── data/
 │   └── pima_indian_diabetes.csv
 ├── src/
@@ -64,6 +66,9 @@ Approximately 35% of individuals in the dataset are diabetic.
 │   └── settings.json
 ├── .Rprofile
 ├── .gitignore
+├── CODE_OF_CONDUCT.md
+├── Dockerfile
+├── LICENSE
 ├── README.md
 ├── dsci-310-group-10.Rproj
 └── renv.lock
@@ -97,7 +102,6 @@ We trained a Random Forest classifier using:
 
 - 80/20 stratified train-test split  
 - 500 decision trees  
-- Default √p variable sampling  
 
 Random Forest was chosen because it:
 
@@ -144,51 +148,8 @@ This project uses `renv` for reproducible package management.
 
 ### Requirements
 
-- R (version 4.5.2 recommended)
 - RStudio
 - renv
-
-### Setup
-
-Clone the repository:
-
-```bash
-git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
-cd dsci-310-group-10
-```
-
-Open the project:
-
-```
-dsci-310-group-10.Rproj
-```
-
-Restore environment:
-
-```r
-install.packages("renv")  # if needed
-renv::restore()
-```
-
----
-
-## Running the Analysis
-
-The complete analysis is located in:
-
-```
-src/predicting_diabetes.Rmd
-```
-
-To reproduce results:
-
-1. Open `predicting_diabetes.Rmd`
-2. Click **Knit**
-3. Output will be generated as:
-
-```
-src/predicting_diabetes.html
-```
 
 ---
 
