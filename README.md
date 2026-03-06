@@ -146,10 +146,50 @@ The model may serve as a useful screening tool but is not a substitute for clini
 
 This project uses `renv` for reproducible package management.
 
-### Requirements
+### Usage
 
-- RStudio
-- renv
+1. Using renv
+
+Clone the repository:
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+cd dsci-310-group-10
+```
+
+Open the project:
+
+```
+dsci-310-group-10.Rproj
+```
+
+Restore environment:
+
+```r
+install.packages("renv")  # if needed
+renv::restore()
+```
+
+---
+
+## Running the Analysis
+
+The complete analysis is located in:
+
+```
+src/predicting_diabetes.Rmd
+```
+
+To reproduce results:
+
+1. Open `predicting_diabetes.Rmd`
+2. Click **Knit**
+3. Output will be generated as:
+
+```
+src/predicting_diabetes.html
+```
+
 
 ---
 
