@@ -153,6 +153,35 @@ This project uses `renv` for reproducible package management.
 
 ---
 
+### Dependencies
+
+- R version 4.5.2 and R packages:
+caret=7.0-1
+ggplot2=4.0.2
+dplyr=1.2.0
+readr=2.2.0
+tidyr=1.3.2
+tibble=3.3.1
+broom=1.0.12
+GGally=2.4.0
+OpenML=1.12
+ModelMetrics=1.2.2.2
+DBI=1.2.3
+Matrix=1.7-4
+MASS=7.3-65
+Rcpp=1.1.1
+
+All package versions and additional dependencies (168 packages total) are recorded in the renv.lock file to ensure reproducibility.
+
+---
+
+### License
+This project is licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA).
+
+If re-using or adapting these materials, please provide attribution and link to this repository.
+
+---
+
 ## References
 
 Chang, V., Bailey, J., Xu, Q. A., & Sun, Z. (2022). Pima Indians diabetes mellitus classification based on machine learning algorithms. Neural Computing & Applications.
