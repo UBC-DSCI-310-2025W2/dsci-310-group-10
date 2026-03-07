@@ -193,23 +193,80 @@ src/predicting_diabetes.html
 
 ---
 
+### Using Docker
+
+In Docker clone the repository:
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+cd dsci-310-group-10
+```
+
+Run the analysis using the project Docker image:
+
+```bash
+docker run --rm -v $(pwd):/home/rstudio/project <dockerhub-username>/dsci310-diabetes:latest make all
+```
+
+The final report will be generated automatically.
+
+To reset the repository to a clean state (remove generated outputs):
+
+```bash
+docker run --rm -v $(pwd):/home/rstudio/project <dockerhub-username>/dsci310-diabetes:latest make clean
+```
+
+---
+
+### Without Docker
+
+Alternatively, the analysis can be run locally.
+
+Clone the repository:
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+cd dsci-310-group-10
+```
+
+Restore the R environment:
+
+```r
+install.packages("renv")
+renv::restore()
+```
+
+Run the analysis pipeline:
+
+```bash
+make all
+```
+
+To clean generated outputs:
+
+```bash
+make clean
+```
+
+---
+
 ### Dependencies
 
 - R version 4.5.2 and R packages:
-caret=7.0-1
-ggplot2=4.0.2
-dplyr=1.2.0
-readr=2.2.0
-tidyr=1.3.2
-tibble=3.3.1
-broom=1.0.12
-GGally=2.4.0
-OpenML=1.12
-ModelMetrics=1.2.2.2
-DBI=1.2.3
-Matrix=1.7-4
-MASS=7.3-65
-Rcpp=1.1.1
+- caret=7.0-1
+- ggplot2=4.0.2
+- dplyr=1.2.0
+- readr=2.2.0
+- tidyr=1.3.2
+- tibble=3.3.1
+- broom=1.0.12
+- GGally=2.4.0
+- OpenML=1.12
+- ModelMetrics=1.2.2.2
+- DBI=1.2.3
+- Matrix=1.7-4
+- MASS=7.3-65
+- Rcpp=1.1.1
 
 All package versions and additional dependencies (168 packages total) are recorded in the renv.lock file to ensure reproducibility.
 
