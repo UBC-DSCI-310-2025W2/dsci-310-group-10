@@ -219,39 +219,8 @@ http://localhost:8787
 
 Login credentials:
 Username: rstudio  
-Password: <printed in terminal when container starts>
+Password: printed in terminal when container starts
 
----
-
-### Without Docker
-
-Alternatively, the analysis can be run locally.
-
-Clone the repository:
-
-```bash
-git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
-cd dsci-310-group-10
-```
-
-Restore the R environment:
-
-```r
-install.packages("renv")
-renv::restore()
-```
-
-Run the analysis pipeline:
-
-```bash
-make all
-```
-
-To clean generated outputs:
-
-```bash
-make clean
-```
 
 ---
 
