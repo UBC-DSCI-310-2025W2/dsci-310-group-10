@@ -146,24 +146,23 @@ The model may serve as a useful screening tool but is not a substitute for clini
 
 This project uses `renv` for reproducible package management.
 
+Note: The farff package currently needs to be installed manually when using either the renv or Docker method. Although it is listed in the renv.lock file, it is not installed automatically. We are investigating this issue and expect to resolve it in the next milestone.
+
 ### Usage
 
-1. Using renv
+#### 1. Using renv
 
-Clone the repository:
+A. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 cd dsci-310-group-10
 ```
 
-Open the project:
+B. Open the project folder in RStudio
 
-```
-dsci-310-group-10.Rproj
-```
 
-Restore environment:
+C. Restore environment:
 
 ```r
 install.packages("renv")  # if needed
@@ -172,7 +171,13 @@ renv::restore()
 
 ---
 
-## Running the Analysis
+D. Running the Analysis
+
+Note: in R console we have to install farff [1.1.1] manually before we can run the analysis
+
+```
+install.packages("farff")
+```
 
 The complete analysis is located in:
 
@@ -183,38 +188,38 @@ src/predicting_diabetes.Rmd
 To reproduce results:
 
 1. Open `predicting_diabetes.Rmd`
-2. Click **Knit**
-3. Output will be generated as:
-
-```
-src/predicting_diabetes.html
-```
-
+2. Click **Run All**
 
 ---
 
-### Using Docker
+#### 2. Using Docker
 
-In Docker clone the repository:
+A. In Docker clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 cd dsci-310-group-10
 ```
 
-Run the analysis using the project Docker image:
+B. Pull the image from Docker Hub:
 
 ```bash
-docker run --rm -v $(pwd):/home/rstudio/project <dockerhub-username>/dsci310-diabetes:latest make all
+docker pull duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-The final report will be generated automatically.
-
-To reset the repository to a clean state (remove generated outputs):
+C. Run the container:
 
 ```bash
-docker run --rm -v $(pwd):/home/rstudio/project <dockerhub-username>/dsci310-diabetes:latest make clean
+docker run -p 8787:8787 duantianyu200/group-10-diabetes-prediction:latest
 ```
+
+D. Open RStudio in your browser at:
+
+http://localhost:8787
+
+Login credentials:
+Username: rstudio  
+Password: <printed in terminal when container starts>
 
 ---
 
