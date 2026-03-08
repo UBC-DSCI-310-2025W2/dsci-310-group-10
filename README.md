@@ -238,7 +238,7 @@ Click Run All
 - MASS=7.3-65
 - Rcpp=1.1.1
 
-All package versions and additional dependencies (168 packages total) are recorded in the renv.lock file to ensure reproducibility.
+All package versions and additional dependencies are recorded in the renv.lock file to ensure reproducibility.
 
 ---
 
