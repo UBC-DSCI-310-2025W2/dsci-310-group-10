@@ -33,3 +33,4 @@ RUN R -e "renv::restore(lockfile = 'renv.lock', prompt = FALSE)"
 COPY . .
 
 EXPOSE 8787
+
