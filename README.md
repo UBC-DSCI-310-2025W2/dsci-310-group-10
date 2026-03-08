@@ -178,7 +178,7 @@ The complete analysis is located in:
 src/predicting_diabetes.Rmd
 ```
 
-To reproduce results:
+E. To reproduce results:
 
 1. Open `predicting_diabetes.Rmd`
 2. Click **Run All**
@@ -213,6 +213,10 @@ Login credentials:
 Username: rstudio  
 Password: printed in the terminal when the container starts
 
+E. To reproduce results:
+
+Open scr/predicting_diabetes.Rmd
+Click Run All
 
 ---
 
