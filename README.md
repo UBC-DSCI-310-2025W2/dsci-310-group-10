@@ -146,7 +146,6 @@ The model may serve as a useful screening tool but is not a substitute for clini
 
 This project uses `renv` for reproducible package management.
 
-Note: The farff package currently needs to be installed manually when using either the renv or Docker method. Although it is listed in the renv.lock file, it is not installed automatically. We are investigating this issue and expect to resolve it in the next milestone.
 
 ### Usage
 
@@ -156,7 +155,6 @@ A. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
-cd dsci-310-group-10
 ```
 
 B. Open the project folder in RStudio
@@ -166,18 +164,13 @@ C. Restore environment:
 
 ```r
 install.packages("renv")  # if needed
+renv::activate()
 renv::restore()
 ```
 
 ---
 
 D. Running the Analysis
-
-Note: in R console we have to install farff [1.1.1] manually before we can run the analysis
-
-```
-install.packages("farff")
-```
 
 The complete analysis is located in:
 
@@ -194,11 +187,10 @@ To reproduce results:
 
 #### 2. Using Docker
 
-A. In Docker clone the repository:
+A. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
-cd dsci-310-group-10
 ```
 
 B. Pull the image from Docker Hub:
@@ -219,7 +211,7 @@ http://localhost:8787
 
 Login credentials:
 Username: rstudio  
-Password: printed in terminal when container starts
+Password: printed in the terminal when the container starts
 
 
 ---
