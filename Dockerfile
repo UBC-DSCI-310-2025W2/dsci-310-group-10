@@ -29,6 +29,9 @@ RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
 # Restore packages
 RUN R -e "renv::restore(lockfile = 'renv.lock', prompt = FALSE)"
 
+# Allow rstudio to render rmd files in docker container
+RUN chown -R rstudio /project
+
 # Now copy the rest of the project (including .Rmd)
 COPY . .
 
