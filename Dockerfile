@@ -33,7 +33,7 @@ RUN R -e "renv::restore(lockfile = 'renv.lock', prompt = FALSE)"
 COPY . .
 
 # Allow rstudio to render rmd files in docker container
-RUN chown -R rstudio /project
+RUN chown -R rstudio /home/rstudio/project
 
 EXPOSE 8787
 
