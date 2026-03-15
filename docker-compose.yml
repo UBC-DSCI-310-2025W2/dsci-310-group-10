@@ -1,0 +1,9 @@
+services:
+  rstudio:
+    image: duantianyu200/group-10-diabetes-prediction:latest
+    container_name: rstudio_container
+    ports:
+      - "8787:8787"
+    environment:
+      - PASSWORD=yourpassword123
+    restart: unless-stopped
