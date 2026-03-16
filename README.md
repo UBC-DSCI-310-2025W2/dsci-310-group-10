@@ -185,7 +185,41 @@ E. To reproduce results:
 
 ---
 
-#### 2. Using Docker
+#### 2. Using Docker compose to launch containers
+
+A. Clone the repository:
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+```
+Make sure the `docker-compose.yml` is in the root folder
+
+B. To launch the container interactively using this file:
+
+```bash
+docker-compose up
+```
+C. Open RStudio in your browser at:
+
+http://localhost:8787
+
+Login credentials:
+Username: rstudio  
+Password: yourpassword123
+
+D. To reproduce results:
+
+Open scr/predicting_diabetes.Rmd
+Click Run All
+
+
+E. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
+
+```bash
+docker-compose down
+```
+
+#### 3. Manually launch docker containers
 
 A. Clone the repository:
 
