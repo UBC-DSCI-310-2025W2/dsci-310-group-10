@@ -13,6 +13,37 @@ All contributors must follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 We expect respectful communication and inclusive behavior at all times.
 
 ---
+ 
+## Ways to Contribute
+
+There are two main ways to contribute to this project:
+
+1. Core Team Members (Direct Collaboration)
+
+Core contributors (Group 10 members) work directly within this repository using a GitHub Flow workflow:
+
+- Create branches from main
+
+- Make changes in small, focused commits
+
+- Open Pull Requests (PRs) for review
+
+- Merge only after approval
+
+2. External Contributors (Fork Workflow)
+
+- If you are not part of the core team, you are welcome to contribute using a fork-based workflow:
+
+- Fork this repository to your own GitHub account
+
+- Clone your fork locally
+
+- Create a new branch for your changes
+
+- Commit and push changes to your fork
+
+- Open a Pull Request from your fork to this repository’s main branch
+
 
 ## Reporting Issues
 
