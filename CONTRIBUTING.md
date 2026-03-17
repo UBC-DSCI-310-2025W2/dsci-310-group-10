@@ -44,6 +44,7 @@ Core contributors (Group 10 members) work directly within this repository using 
 
 - Open a Pull Request from your fork to this repository’s main branch
 
+---
 
 ## Reporting Issues
 
