@@ -147,7 +147,7 @@ The model may serve as a useful screening tool but is not a substitute for clini
 This project uses `renv` for reproducible package management.
 
 
-### Usage
+### Usage (pick one method from below)
 
 #### 1. Using renv
 
@@ -194,12 +194,18 @@ git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
 Make sure the `docker-compose.yml` is in the root folder
 
-B. To launch the container interactively using this file:
+B. Pull the image from Docker Hub:
+
+```bash
+docker pull duantianyu200/group-10-diabetes-prediction:latest
+```
+
+C. To launch the container interactively using this file:
 
 ```bash
 docker-compose up
 ```
-C. Open RStudio in your browser at:
+D. Open RStudio in your browser at:
 
 http://localhost:8787
 
@@ -207,13 +213,13 @@ Login credentials:
 Username: rstudio  
 Password: yourpassword123
 
-D. To reproduce results:
+E. To reproduce results:
 
 Open scr/predicting_diabetes.Rmd
 Click Run All
 
 
-E. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
+F. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
 
 ```bash
 docker-compose down
@@ -279,18 +285,10 @@ All package versions and additional dependencies are recorded in the renv.lock f
 ### License
 This project is licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA).
 
+Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+
 If re-using or adapting these materials, please provide attribution and link to this repository.
 
 ---
 
-## References
 
-Chang, V., Bailey, J., Xu, Q. A., & Sun, Z. (2022). Pima Indians diabetes mellitus classification based on machine learning algorithms. Neural Computing & Applications.
-
-Roumie, C. L., et al. (2020). Blood Pressure Control and the Association With Diabetes Mellitus Incidence. Hypertension.
-
-Kautzky-Willer, A., Leutner, M., & Harreiter, J. (2023). Sex differences in type 2 diabetes. Diabetologia.
-
-OpenML Dataset (2025). https://www.openml.org/search?type=data&id=43483
-
----
