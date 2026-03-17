@@ -32,7 +32,7 @@ Core contributors (Group 10 members) work directly within this repository using 
 
 2. External Contributors (Fork Workflow)
 
-- If you are not part of the core team, you are welcome to contribute using a fork-based workflow:
+If you are not part of the core team, you are welcome to contribute using a fork-based workflow:
 
 - Fork this repository to your own GitHub account
 
