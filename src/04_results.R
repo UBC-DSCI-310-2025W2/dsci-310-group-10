@@ -53,6 +53,7 @@ metrics_table <- data.frame(
 )
 
 # Save outputs
+# Save outputs
 saveRDS(conf_mat, output_conf_mat)
-saveRDS(metrics_table, output_metrics)
-saveRDS(conf_mat_plot, output_plot)
+write.csv(metrics_table, output_metrics, row.names = FALSE)
+ggsave(output_plot, conf_mat_plot, width = 6, height = 5)
