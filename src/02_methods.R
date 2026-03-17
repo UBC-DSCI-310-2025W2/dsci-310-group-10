@@ -51,5 +51,5 @@ pair_plot <- ggpairs(
 
 # Save outputs
 saveRDS(data, output_data)
-saveRDS(pair_plot, output_plot)
-saveRDS(summary_stats, output_summary)
+ggsave(filename = output_plot, plot = pair_plot, width = 12, height = 10)
+write.csv(as.data.frame(summary_stats), output_summary, row.names = TRUE)
