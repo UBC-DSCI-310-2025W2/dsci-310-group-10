@@ -355,17 +355,40 @@ display: none;
 
 <p>DSCI 310, group 10: Niki Duan, Vivian Pu, Nathan Sihombing, Yun
 Tian</p>
-<div id="a.-introduction" class="section level2">
-<h2>A. Introduction</h2>
-<div id="a.1-background-information" class="section level3">
-<h3>A.1 Background Information</h3>
+<div id="abstract-summary" class="section level1">
+<h1>Abstract Summary</h1>
+<p>This study investigates the use of machine learning techniques to
+predict diabetes status using clinical and demographic data from the
+Pima Indian Diabetes dataset. The dataset includes physiological
+variables such as glucose level, body mass index (BMI), age, and number
+of pregnancies.</p>
+<p>A random forest classification model was developed to capture
+nonlinear relationships among predictors and improve prediction
+accuracy. The model demonstrated strong performance on the test dataset,
+achieving an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and
+an F1 score of 91.7%. The high recall indicates that the model is
+particularly effective at identifying individuals with diabetes, making
+it well-suited for screening and early detection applications.</p>
+<p>Despite these promising results, the study has limitations. The
+dataset includes only female participants, which may restrict the
+generalizability of the model to broader populations. Overall, this
+analysis demonstrates that machine learning models, particularly
+ensemble methods like random forests, can effectively support diabetes
+risk prediction, though further validation across diverse populations is
+necessary before clinical implementation.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<div id="background-information" class="section level2">
+<h2>Background Information</h2>
 <p>Diabetes is a chronic metabolic disease that affects millions of
 people worldwide, with significant health consequences if not properly
-managed. Early detection of diabetes is critical for preventing
-complications such as cardiovascular disease, kidney dysfunction, nerve
-damage, and vision problems. Women may face unique challenges related to
-diabetes, including an increased risk of pregnancy-related complications
-and a higher susceptibility to certain cancers.</p>
+managed (Spinelli et al., 2020). Early detection of diabetes is critical
+for preventing complications such as cardiovascular disease, kidney
+dysfunction, nerve damage, and vision problems (Spinelli et al., 2020).
+Women may face unique challenges related to diabetes, including an
+increased risk of pregnancy-related complications and a higher
+susceptibility to certain cancers (Berg, 2005).</p>
 <p>Accurate prediction of diabetes using clinical and demographic data
 can help identify individuals at risk, enabling timely interventions and
 better management of the disease.</p>
@@ -373,8 +396,8 @@ better management of the disease.</p>
 methods to predict the presence of diabetes in individuals based on
 relevant clinical measurements and features from the dataset.</p>
 </div>
-<div id="a.2-research-question" class="section level3">
-<h3>A.2 Research Question</h3>
+<div id="research-question" class="section level2">
+<h2>Research Question</h2>
 <p>The question we will try to answer with this project is: “Can we
 predict the presence of diabetes in individuals based on clinical and
 demographic features?”</p>
@@ -389,8 +412,8 @@ the Pima Indian study dataset has been widely used to develop predictive
 models for diabetes, highlighting the role of these risk factors in
 disease onset (Chang et al., 2022, Roumie et al., 2020).</p>
 </div>
-<div id="a.3-dataset-used" class="section level3">
-<h3>A.3 Dataset Used</h3>
+<div id="dataset-used" class="section level2">
+<h2>Dataset Used</h2>
 <p>The unprocessed dataset was acquired from the UCI Machine Learning
 Repository and is originally from the National Institute of Diabetes and
 Digestive and Kidney Diseases. The version used in this project was
@@ -416,8 +439,8 @@ indicating genetic predisposition)</li>
 </ul>
 </div>
 </div>
-<div id="b.-eda" class="section level2">
-<h2>B. EDA</h2>
+<div id="eda" class="section level1">
+<h1>EDA</h1>
 <pre class="r"><code># loading all the required libraries. 
 library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
@@ -463,8 +486,8 @@ dataset_id &lt;- 43483
 
 # Download
 oml_data &lt;- getOMLDataSet(data.id = dataset_id)</code></pre>
-<pre><code>## Downloading from &#39;http://www.openml.org/api/v1/data/43483&#39; to &#39;/var/folders/vg/d1lmxx1d1kj1xxm7r83w1nbr0000gn/T//RtmpE3o0w7/cache/datasets/43483/description.xml&#39;.</code></pre>
-<pre><code>## Downloading from &#39;https://openml.org/data/v1/download/22102308/Pima-Indians-Diabetes-Dataset.arff&#39; to &#39;/var/folders/vg/d1lmxx1d1kj1xxm7r83w1nbr0000gn/T//RtmpE3o0w7/cache/datasets/43483/dataset.arff&#39;</code></pre>
+<pre><code>## Downloading from &#39;http://www.openml.org/api/v1/data/43483&#39; to &#39;/var/folders/vg/d1lmxx1d1kj1xxm7r83w1nbr0000gn/T//RtmpscM9pU/cache/datasets/43483/description.xml&#39;.</code></pre>
+<pre><code>## Downloading from &#39;https://openml.org/data/v1/download/22102308/Pima-Indians-Diabetes-Dataset.arff&#39; to &#39;/var/folders/vg/d1lmxx1d1kj1xxm7r83w1nbr0000gn/T//RtmpscM9pU/cache/datasets/43483/dataset.arff&#39;</code></pre>
 <pre class="r"><code># Extract as data.frame
 df &lt;- oml_data$data
 
@@ -571,10 +594,12 @@ diagonal further show that individuals with diabetes tend to have higher
 glucose levels, greater BMI, and are older compared to those without
 diabetes.</p>
 </div>
-<div id="c.-data-analysis-and-modeling" class="section level2">
-<h2>C. Data Analysis and modeling</h2>
+<div id="methods-results" class="section level1">
+<h1>Methods &amp; Results</h1>
 <p>To predict diabetes status, we performed a supervised classification
-analysis using a random forest model in R.</p>
+analysis using a random forest model in R (R Core Team, 2019). And the
+following R packages were used to perform the analysis: knitr (Xie
+2014), tidyverse (Wickham 2017), and Quarto (Allaire et al 2022).</p>
 <p>First, the dataset was imported into R as a data frame. The outcome
 variable representing diabetes status was converted to a factor to
 ensure that the task was treated as a classification problem rather than
@@ -588,8 +613,11 @@ data.</p>
 <p>A random forest classifier was trained using the training dataset.
 The model was fit using 500 decision trees, and the number of variables
 randomly sampled at each split was set to the default value (the square
-root of the number of predictors). Random forest was selected because it
-is robust to nonlinear relationships, automatically captures
+root of the number of predictors). A decision tree is a supervised
+learning model that makes predictions by recursively splitting the data
+into subsets based on feature values, forming a tree-like structure of
+decision rules that lead to a final outcome. Random forest was selected
+because it is robust to nonlinear relationships, automatically captures
 interactions between variables, and is less prone to overfitting
 compared to a single decision tree.</p>
 <p>After training, the fitted model was used to generate predictions on
@@ -715,8 +743,8 @@ reliable for both detecting diabetes and minimizing unnecessary follow
 ups. Overall, this model achieves a clinically useful balance suitable
 for diagnostic support.</p>
 </div>
-<div id="d.-discussion" class="section level2">
-<h2>D. Discussion</h2>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
 <p>In this analysis, we developed a random forest classification model
 to predict diabetes status using clinical and physiological predictors.
 The model demonstrated strong performance, achieving an accuracy of
@@ -731,14 +759,7 @@ precision.</p>
 <p>These results are somewhat consistent with expectations. Random
 forest models are known to perform well on structured clinical datasets
 because they can capture nonlinear relationships and interactions among
-variables without requiring strong parametric assumptions. Given that
-diabetes risk is influenced by multiple interacting factors, such as
-glucose levels, BMI, age, and metabolic indicators. It is reasonable
-that an ensemble tree-based method would achieve high predictive
-performance. However, the relatively high accuracy and recall observed
-here may also reflect characteristics of the dataset, including sample
-size, feature quality, and potential homogeneity within the
-population.</p>
+variables without requiring strong parametric assumptions.</p>
 <p>The potential impact of such findings is meaningful in the context of
 early detection and screening. A model with high recall could support
 clinical decision-making by identifying high-risk individuals who may
@@ -775,8 +796,8 @@ effectively predict diabetes status using clinical data, but broader
 validation and consideration of sex differences are necessary before
 clinical implementation.</p>
 </div>
-<div id="e.-references" class="section level2">
-<h2>E. References</h2>
+<div id="references" class="section level1">
+<h1>References</h1>
 <ul>
 <li>“OpenML.” Openml.org, 2025,
 www.openml.org/search?type=data&amp;id=43483&amp;sort=runs&amp;status=active.</li>
@@ -792,6 +813,21 @@ Diabetes Mellitus Incidence: Results From SPRINT Randomized Trial.
 Hypertension (Dallas, Tex. : 1979), 75(2), 331–338. <a href="https://doi.org/10.1161/HYPERTENSIONAHA.118.12572" class="uri">https://doi.org/10.1161/HYPERTENSIONAHA.118.12572</a></li>
 <li>Kautzky-Willer, A., Leutner, M., &amp; Harreiter, J. (2023). Sex
 differences in type 2 diabetes. Diabetologia, 66(6), 986–1002. <a href="https://doi.org/10.1007/s00125-023-05891-x" class="uri">https://doi.org/10.1007/s00125-023-05891-x</a></li>
+<li>Spinelli, R., Parrillo, L., Longo, M. et al. Molecular basis of
+ageing in chronic metabolic diseases. J Endocrinol Invest 43, 1373–1389
+(2020). <a href="https://doi.org/10.1007/s40618-020-01255-z" class="uri">https://doi.org/10.1007/s40618-020-01255-z</a></li>
+<li>Berg M. (2005). Pregnancy and diabetes: how women handle the
+challenges. The Journal of perinatal education, 14(3), 23–32. <a href="https://doi.org/10.1624/105812405X57552" class="uri">https://doi.org/10.1624/105812405X57552</a></li>
+<li>Allaire, J. J., Charles Teague, Carlos Scheidegger, Yihui Xie, and
+Christophe Dervieux. 2022. “Quarto.” <a href="https://doi.org/10.5281/zenodo.5960048" class="uri">https://doi.org/10.5281/zenodo.5960048</a>.</li>
+<li>R Core Team. 2019. R: A Language and Environment for Statistical
+Computing. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
+<li>Wickham, Hadley. 2017. Tidyverse: Easily Install and Load the
+’Tidyverse’. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</li>
+<li>Xie, Yihui. 2014. “Knitr: A Comprehensive Tool for Reproducible
+Research in R.” In Implementing Reproducible Computational Research,
+edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng.
+Chapman; Hall/CRC. <a href="http://www.crcpress.com/product/isbn/9781466561595" class="uri">http://www.crcpress.com/product/isbn/9781466561595</a>.</li>
 </ul>
 </div>
 
