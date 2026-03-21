@@ -36,4 +36,3 @@ COPY . .
 RUN chown -R rstudio /home/rstudio/project
 
 EXPOSE 8787
-
