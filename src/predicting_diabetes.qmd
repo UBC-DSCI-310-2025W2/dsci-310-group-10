@@ -237,7 +237,7 @@ Table @tbl-metrics is performance metrics for the random forest model predicting
 
 The model demonstrates strong performance with an accuracy of `r round(accuracy * 100, 1)`%, precision of `r round(precision * 100, 1)`%, recall of `r round(recall * 100, 1)`%, and an F1 score of `r round(f1 * 100, 1)`%. The high recall (94.0%) is particularly noteworthy as it indicates the model successfully identifies 94% of actual diabetes cases, missing only 6% of positive patients. The precision of 89.5% means that when the model predicts diabetes, it is correct nearly 90% of the time, resulting in relatively few false alarms. The excellent F1 score of 91.7% confirms a strong balance between precision and recall, making this model highly reliable for both detecting diabetes and minimizing unnecessary follow ups. Overall, this model achieves a clinically useful balance suitable for diagnostic support.
 
-## D. Discussion
+# Discussion
 
 In this analysis, we developed a random forest classification model to predict diabetes status using clinical and physiological predictors. The model demonstrated strong performance, achieving an accuracy of `r round(accuracy * 100, 1)`%, precision of `r round(precision * 100, 1)`%, recall of `r round(recall * 100, 1)`%, and an F1 score of `r round(f1 * 100, 1)`%. Notably, the high recall indicates that the model correctly identified the vast majority of individuals with diabetes, missing only a small proportion of true cases. This is particularly important in a clinical screening context, where failing to detect true positive cases can delay diagnosis and treatment. The strong F1 score further confirms that the model maintains a well-balanced trade-off between sensitivity and precision.
 
@@ -252,4 +252,4 @@ These findings raise several additional future questions. First, how would this 
 Overall, this study demonstrates that machine learning approaches can effectively predict diabetes status using clinical data, but broader validation and consideration of sex differences are necessary before clinical implementation.
 
 
-## E. References 
+# References 
