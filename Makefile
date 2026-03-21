@@ -3,7 +3,8 @@
 
 all: results/eda_plot.png results/final_plot.png \
      results/eda_summary.csv results/final_results.csv \
-     results/model.rds data/clean_data.rds
+     results/model.rds data/clean_data.rds \
+     src/predicting_diabetes.html
 
 # Step 1: Load data
 data/clean_data.rds: src/01_load_data.R
@@ -12,7 +13,6 @@ data/clean_data.rds: src/01_load_data.R
 # Step 2: EDA + preprocessing
 results/eda_plot.png results/eda_summary.csv data/processed_data.rds: src/02_methods.R data/clean_data.rds
 	Rscript src/02_methods.R data/clean_data.rds data/processed_data.rds results/eda_plot.png results/eda_summary.csv
-	
 # Step 3: Model training
 results/model.rds: src/03_model.R data/processed_data.rds
 	Rscript src/03_model.R data/processed_data.rds results/model.rds results/test_data.rds
@@ -21,9 +21,14 @@ results/model.rds: src/03_model.R data/processed_data.rds
 results/final_plot.png results/final_results.csv: src/04_results.R results/model.rds results/test_data.rds
 	Rscript src/04_results.R results/model.rds results/test_data.rds results/conf_mat.rds results/final_results.csv results/final_plot.png
 
+# Step 5: Render Quarto Report 
+src/predicting_diabetes.html: src/predicting_diabetes.qmd results/eda_plot.png results/final_plot.png results/final_results.csv
+	quarto render src/predicting_diabetes.qmd --to html
+
 # Clean everything
 clean:
 	rm -f data/*.rds
-	rm -rf results
-
+	rm -rf results/*
+	rm -f src/predicting_diabetes.html
+	
 .PHONY: all clean

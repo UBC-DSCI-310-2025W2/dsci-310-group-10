@@ -71,23 +71,12 @@ The dataset attributes are as follows:
 #| include: false
 
 library(tidyverse)
-library(repr)
-library(GGally)
-library(OpenML)
 library(knitr)
-library(randomForest)
-library(caret)
 
-
-options(repr.matrix.max.rows = 6)
-set.seed(1)
-
-dataset_id <- 43483
-oml_data <- getOMLDataSet(data.id = dataset_id)
-df <- as.data.frame(oml_data$data)
+df <- readRDS("../data/processed_data.rds")
 
 n_obs <- nrow(df)
-diabetes_rate <- mean(df$Outcome == 1) * 100
+diabetes_rate <- mean(df$Outcome == "Yes", na.rm = TRUE) * 100
 ```
 
 ```{r}
@@ -96,7 +85,7 @@ diabetes_rate <- mean(df$Outcome == 1) * 100
 
 head(df)
 ```
-Table @tbl-head: `df` the entire dataset, having 9 variables.
+@tbl-head: `df` the entire dataset, having 9 variables.
 
 The df is already very clean with no missing values as shown below.
 
@@ -114,7 +103,7 @@ sapply(df[, cols, drop = FALSE], function(x) any(x == 0))
 
 summary(df)
 ```
-Table @tbl-summary presents the baseline characteristics of participants included in the diabetes dataset, presented as minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable.
+@tbl-summary presents the baseline characteristics of participants included in the diabetes dataset, presented as minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable.
 
 Dataset Overview
 - Total Observations: `r n_obs`
@@ -126,26 +115,11 @@ Potential issue to address: Class Imbalance: Only ~35% of cases are diabetic, so
 ```{r}
 #| label: fig-pairplot
 #| fig-cap: "Pairwise relationships between predictors and diabetes outcome."
-#| fig-width: 12
-#| fig-height: 10
 
-df$Outcome <- factor(df$Outcome, levels=c(0,1), labels=c("No","Yes"))
-
-plot_df <- df %>%
-  select(Pregnancies, Glucose, BloodPressure,
-         SkinThickness, Insulin, BMI,
-         DiabetesPedigreeFunction, Age, Outcome)
-
-ggpairs(plot_df,
-        aes(color = Outcome, alpha = 0.5),
-        columns = 1:8,
-        upper = list(continuous = wrap("cor", size = 3)),
-        lower = list(continuous = "points"),
-        diag = list(continuous = "densityDiag")) +
-  theme_minimal()
+knitr::include_graphics("../results/eda_plot.png")
 ```
 
-Figure @fig-pairplot shows the pairwise relationships between predictors and diabetes outcome.
+@fig-pairplot shows the pairwise relationships between predictors and diabetes outcome.
 
 @fig-pairplot: Matrix of scatter plots (lower panel), density plots (diagonal), and correlation coefficients (upper panel) for the eight predictor variables in the Pima Indian Diabetes dataset. Points are color-coded by diabetes status (blue = No diabetes, red = Diabetes), with overlaid density curves showing the distribution of each variable for the two outcome groups.
 
@@ -175,65 +149,27 @@ All analyses were conducted in R using the randomForest and caret packages.
 
 ```{r}
 #| label: fig-confusion
-#| fig-cap: "Confusion matrix for the random forest model predicting diabetes on the test dataset."
-#| fig-width: 7
-#| fig-height: 5
-
-# Load required libraries
-library(randomForest)
-library(caret)
-
-df$Outcome <- as.factor(df$Outcome)
-
-train_index <- createDataPartition(df$Outcome, p = 0.8, list = FALSE)
-train_data <- df[train_index, ]
-test_data  <- df[-train_index, ]
-
-rf_model <- randomForest(
-  Outcome ~ ., 
-  data = train_data,
-  ntree = 500,
-  importance = TRUE
-)
-
-predictions <- predict(rf_model, newdata = test_data)
-
-cm <- confusionMatrix(predictions, test_data$Outcome)
-cm_table <- as.data.frame(cm$table)
-
-colnames(cm_table) <- c("Prediction", "Reference", "Freq")
-
-ggplot(cm_table, aes(x = Reference, y = Prediction, fill = Freq)) +
-  geom_tile(color = "white") +
-  geom_text(aes(label = Freq), size = 6) +
-  scale_fill_gradient(low = "white", high = "steelblue") +
-  labs(
-    x = "Actual",
-    y = "Predicted"
-  ) +
-  theme_minimal(base_size = 14)
+#| fig-cap: "Confusion matrix for the random forest model."
+knitr::include_graphics("../results/final_plot.png")
 ```
 
-Figure @fig-confusion shows the confusion matrix for the random forest model predicting diabetes status on the test dataset. The matrix shows the number of true positives, true negatives, false positives, and false negatives, comparing predicted classifications to the actual outcomes.
+@fig-confusion shows the confusion matrix for the random forest model predicting diabetes status on the test dataset. The matrix shows the number of true positives, true negatives, false positives, and false negatives, comparing predicted classifications to the actual outcomes.
 
 ```{r}
 #| label: tbl-metrics
 #| tbl-cap: "Performance metrics for the random forest model predicting diabetes on the test dataset."
 
-accuracy <- cm$overall["Accuracy"]
-precision <- cm$byClass["Precision"]
-recall    <- cm$byClass["Recall"]
-f1        <- cm$byClass["F1"]
+metrics_table <- read.csv("../results/final_results.csv")
 
-metrics_table <- data.frame(
-  Metric = c("Accuracy", "Precision", "Recall", "F1 Score"),
-  Value  = c(accuracy, precision, recall, f1)
-)
+accuracy  <- metrics_table$Value[metrics_table$Metric == "Accuracy"]
+precision <- metrics_table$Value[metrics_table$Metric == "Precision"]
+recall    <- metrics_table$Value[metrics_table$Metric == "Recall"]
+f1        <- metrics_table$Value[metrics_table$Metric == "F1 Score"]
 
 knitr::kable(metrics_table, digits = 3)
 ```
 
-Table @tbl-metrics is performance metrics for the random forest model predicting diabetes on the test dataset, including accuracy, precision, recall, and F1 score
+@tbl-metrics is performance metrics for the random forest model predicting diabetes on the test dataset, including accuracy, precision, recall, and F1 score
 
 The model demonstrates strong performance with an accuracy of `r round(accuracy * 100, 1)`%, precision of `r round(precision * 100, 1)`%, recall of `r round(recall * 100, 1)`%, and an F1 score of `r round(f1 * 100, 1)`%. The high recall (94.0%) is particularly noteworthy as it indicates the model successfully identifies 94% of actual diabetes cases, missing only 6% of positive patients. The precision of 89.5% means that when the model predicts diabetes, it is correct nearly 90% of the time, resulting in relatively few false alarms. The excellent F1 score of 91.7% confirms a strong balance between precision and recall, making this model highly reliable for both detecting diabetes and minimizing unnecessary follow ups. Overall, this model achieves a clinically useful balance suitable for diagnostic support.
 
