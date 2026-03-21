@@ -152,7 +152,8 @@ Figure @fig-pairplot shows the pairwise relationships between predictors and dia
 The pair plot reveals that glucose concentration has the strongest association with diabetes outcome (r = 0.53, p < 0.001), followed by BMI (r = 0.29, p < 0.001), age (r = 0.27, p < 0.001), and number of pregnancies (r = 0.22, p < 0.001), while other variables such as insulin, skin thickness, blood pressure, and diabetes pedigree function show weaker but still statistically significant correlations. Notable inter-feature relationships include strong positive correlations between age and pregnancies (r = 0.54) and between BMI and skin thickness (r = 0.54), as well as moderate correlations among insulin, glucose, and BMI, indicating expected physiological links. The density plots along the diagonal further show that individuals with diabetes tend to have higher glucose levels, greater BMI, and are older compared to those without diabetes.
 
 # Methods & Results
-To predict diabetes status, we performed a supervised classification analysis using a random forest model in R.
+To predict diabetes status, we performed a supervised classification analysis using a random forest model in R [@rcore2019]. And the following R packages were used to perform the analysis: knitr [@xie2014], tidyverse [@wickham2017], and Quarto [@quarto2022].
+
 
 First, the dataset was imported into R as a data frame. The outcome variable representing diabetes status was converted to a factor to ensure that the task was treated as a classification problem rather than regression. All predictor variables were retained as features for model training.
 
