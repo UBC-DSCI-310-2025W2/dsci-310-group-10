@@ -151,16 +151,24 @@ This project uses `renv` for reproducible package management.
 
 #### 1. Using renv
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
 
-B. Open the project folder in RStudio
+D. Open the project folder in RStudio (inside RStudio, click "File" then "open project", and select dsci-310-group-10)
 
 
-C. Restore environment:
+E. Restore environment:
 
 ```r
 install.packages("renv")  # if needed
@@ -170,7 +178,7 @@ renv::restore()
 
 ---
 
-D. Running the Analysis
+F. Running the Analysis
 
 The complete analysis is located in:
 
@@ -178,7 +186,7 @@ The complete analysis is located in:
 src/predicting_diabetes.Rmd
 ```
 
-E. To reproduce results:
+G. To reproduce results:
 
 1. Open `predicting_diabetes.Rmd`
 2. Click **Run All**
@@ -187,25 +195,40 @@ E. To reproduce results:
 
 #### 2. Using Docker compose to launch containers
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
+
 Make sure the `docker-compose.yml` is in the root folder
 
-B. Pull the image from Docker Hub:
+D. Navigate into the project directory
+
+```bash
+cd dsci-310-group-10
+```
+
+E. Pull the image from Docker Hub:
 
 ```bash
 docker pull duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-C. To launch the container interactively using this file:
+F. To launch the container interactively using this file:
 
 ```bash
 docker-compose up
 ```
-D. Open RStudio in your browser at:
+G. Open RStudio in your browser at:
 
 http://localhost:8787
 
@@ -213,13 +236,13 @@ Login credentials:
 Username: rstudio  
 Password: yourpassword123
 
-E. To reproduce results:
+H. To reproduce results:
 
-Open scr/predicting_diabetes.Rmd
+Open src/predicting_diabetes.Rmd
 Click Run All
 
 
-F. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
+I. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
 
 ```bash
 docker-compose down
@@ -227,25 +250,39 @@ docker-compose down
 
 #### 3. Manually launch docker containers
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
 
-B. Pull the image from Docker Hub:
+D. Navigate into the project directory
+
+```bash
+cd dsci-310-group-10
+```
+
+E. Pull the image from Docker Hub:
 
 ```bash
 docker pull duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-C. Run the container:
+F. Run the container:
 
 ```bash
 docker run -p 8787:8787 duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-D. Open RStudio in your browser at:
+G. Open RStudio in your browser at:
 
 http://localhost:8787
 
@@ -253,9 +290,9 @@ Login credentials:
 Username: rstudio  
 Password: printed in the terminal when the container starts
 
-E. To reproduce results:
+H. To reproduce results:
 
-Open scr/predicting_diabetes.Rmd
+Open src/predicting_diabetes.Rmd
 Click Run All
 
 ---
@@ -290,5 +327,3 @@ Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
 If re-using or adapting these materials, please provide attribution and link to this repository.
 
 ---
-
-
