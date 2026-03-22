@@ -4,7 +4,7 @@
 all: results/eda_plot.png results/final_plot.png \
      results/eda_summary.csv results/final_results.csv \
      results/model.rds data/clean_data.rds \
-     src/predicting_diabetes.html
+     reports/predicting_diabetes.html
 
 # Step 1: Load data
 data/clean_data.rds: src/01_load_data.R
@@ -22,13 +22,13 @@ results/final_plot.png results/final_results.csv: src/04_results.R results/model
 	Rscript src/04_results.R results/model.rds results/test_data.rds results/conf_mat.rds results/final_results.csv results/final_plot.png
 
 # Step 5: Render Quarto Report 
-src/predicting_diabetes.html: src/predicting_diabetes.qmd results/eda_plot.png results/final_plot.png results/final_results.csv
-	quarto render src/predicting_diabetes.qmd --to html
+reports/predicting_diabetes.html: reports/predicting_diabetes.qmd results/eda_plot.png results/final_plot.png results/final_results.csv
+	quarto render reports/predicting_diabetes.qmd --to html
 
 # Clean everything
 clean:
 	rm -f data/*.rds
 	rm -rf results/*
-	rm -f src/predicting_diabetes.html
+	rm -f reports/predicting_diabetes.html
 	
 .PHONY: all clean
