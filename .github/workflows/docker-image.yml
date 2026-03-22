@@ -5,10 +5,12 @@ on:
     branches: [ "main" ]
     paths:
       - "Dockerfile"
+      - "renv.lock"
   pull_request:
     branches: [ "main" ]
     paths:
       - "Dockerfile"
+      - "renv.lock"
 
 jobs:
 
