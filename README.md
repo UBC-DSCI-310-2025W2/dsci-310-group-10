@@ -4,11 +4,11 @@
 
 ---
 
-## Project Overview
+## About
 
-Diabetes is a chronic metabolic disease affecting millions of individuals worldwide. Early detection is essential to prevent severe complications such as cardiovascular disease, kidney damage, neuropathy, and vision impairment.
+This study investigates the use of machine learning techniques to predict diabetes status using clinical and demographic data from the Pima Indian Diabetes dataset. The dataset includes physiological variables such as glucose level, body mass index (BMI), age, and number of pregnancies.
 
-The goal of this project is to investigate whether diabetes status can be predicted using clinical and demographic features. Using the Pima Indian Diabetes dataset, we conduct exploratory data analysis (EDA) and develop a machine learning classification model to predict the presence of diabetes.
+A random forest classification model was developed to capture nonlinear relationships among predictors and improve prediction accuracy. The model demonstrated strong performance on the test dataset, achieving an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. The high recall indicates that the model is particularly effective at identifying individuals with diabetes, making it well-suited for screening and early detection applications.
 
 **Research Question:**  
 Can we predict the presence of diabetes in individuals based on clinical and demographic features?
@@ -24,143 +24,32 @@ The dataset originates from:
 - OpenML Dataset ID: 43483  
   https://www.openml.org/search?type=data&id=43483
 
-### Dataset Description
-
-- Population: Female patients, age 21 years or older  
-- Heritage: Pima Indian  
-- Number of observations: 768  
-- Target variable: `Outcome`  
-  - 0 = No diabetes  
-  - 1 = Diabetes  
-
-### Features
-
-- Pregnancies — Number of pregnancies  
-- Glucose — Plasma glucose concentration  
-- BloodPressure — Diastolic blood pressure  
-- SkinThickness — Triceps skinfold thickness  
-- Insulin — Serum insulin  
-- BMI — Body Mass Index  
-- DiabetesPedigreeFunction — Genetic predisposition score  
-- Age — Age in years  
-- Outcome — Diabetes diagnosis (binary)
-
-Approximately 35% of individuals in the dataset are diabetic.
-
----
-
-## Repository Structure
-
-```
-.
-├── .github/
-│   └── docker-image.yml
-├── data/
-│   └── pima_indian_diabetes.csv
-├── src/
-│   ├── predicting_diabetes.Rmd
-│   └── predicting_diabetes.html
-├── renv/
-│   ├── .gitignore
-│   ├── active.R
-│   └── settings.json
-├── .Rprofile
-├── .gitignore
-├── CODE_OF_CONDUCT.md
-├── Dockerfile
-├── LICENSE
-├── README.md
-├── dsci-310-group-10.Rproj
-└── renv.lock
-```
-
----
-
-## Methods
-
-### Exploratory Data Analysis (EDA)
-
-We performed:
-
-- Summary statistics  
-- Missing value checks  
-- Correlation analysis  
-- Density plots by outcome  
-- Pairwise scatterplot matrices  
-
-Key findings:
-
-- Glucose is the strongest predictor of diabetes.
-- BMI, Age, and Pregnancies are positively associated with diabetes.
-- Moderate class imbalance exists (~35% diabetic).
-
----
-
-### Model Development
-
-We trained a Random Forest classifier using:
-
-- 80/20 stratified train-test split  
-- 500 decision trees  
-
-Random Forest was chosen because it:
-
-- Captures nonlinear relationships  
-- Handles feature interactions  
-- Is robust to overfitting  
-- Performs well on structured clinical data  
-
----
-
-## Model Evaluation
-
-Performance metrics:
-
-| Metric     | Value  |
-|------------|--------|
-| Accuracy   | 88.9%  |
-| Precision  | 89.5%  |
-| Recall     | 94.0%  |
-| F1 Score   | 91.7%  |
-
-### Interpretation
-
-- High recall indicates strong detection of diabetic patients.
-- High precision reduces false positives.
-- Strong F1 score reflects balanced classification performance.
-
-The model may serve as a useful screening tool but is not a substitute for clinical diagnosis.
-
----
-
-## Limitations
-
-- Dataset includes only female participants.
-- Results may not generalize to other populations.
-- External validation is needed.
-- Advanced models (e.g., gradient boosting) could be explored.
-
----
-
 ## Reproducibility
 
 This project uses `renv` for reproducible package management.
 
 
-### Usage (pick one method from below)
+## Usage (pick one method from below)
 
-#### 1. Using renv
+### 1. Using renv
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
 
-B. Open the project folder in RStudio
+D. Open the project folder in RStudio (inside RStudio, click "File" then "open project", and select dsci-310-group-10)
 
-
-C. Restore environment:
+E. Restore environment:
 
 ```r
 install.packages("renv")  # if needed
@@ -170,7 +59,7 @@ renv::restore()
 
 ---
 
-D. Running the Analysis
+F. Running the Analysis
 
 The complete analysis is located in:
 
@@ -178,34 +67,49 @@ The complete analysis is located in:
 src/predicting_diabetes.Rmd
 ```
 
-E. To reproduce results:
+G. To reproduce results:
 
 1. Open `predicting_diabetes.Rmd`
 2. Click **Run All**
 
 ---
 
-#### 2. Using Docker compose to launch containers
+### 2. Using Docker compose to launch containers
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
+
 Make sure the `docker-compose.yml` is in the root folder
 
-B. Pull the image from Docker Hub:
+D. Navigate into the project directory
+
+```bash
+cd dsci-310-group-10
+```
+
+E. Pull the image from Docker Hub:
 
 ```bash
 docker pull duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-C. To launch the container interactively using this file:
+F. To launch the container interactively using this file:
 
 ```bash
 docker-compose up
 ```
-D. Open RStudio in your browser at:
+G. Open RStudio in your browser at:
 
 http://localhost:8787
 
@@ -213,39 +117,53 @@ Login credentials:
 Username: rstudio  
 Password: yourpassword123
 
-E. To reproduce results:
+H. To reproduce results:
 
-Open scr/predicting_diabetes.Rmd
+Open src/predicting_diabetes.Rmd
 Click Run All
 
 
-F. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
+I. To stop and clean up the container, you would use Ctrl + c in the terminal where you launched the container, and then type: 
 
 ```bash
 docker-compose down
 ```
 
-#### 3. Manually launch docker containers
+### 3. Manually launch docker containers
 
-A. Clone the repository:
+A. Open your terminal.
+
+B. Navigate to the directory where you want to store the project. For example:
+
+```bash
+cd Desktop
+```
+
+C. Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 ```
 
-B. Pull the image from Docker Hub:
+D. Navigate into the project directory
+
+```bash
+cd dsci-310-group-10
+```
+
+E. Pull the image from Docker Hub:
 
 ```bash
 docker pull duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-C. Run the container:
+F. Run the container:
 
 ```bash
 docker run -p 8787:8787 duantianyu200/group-10-diabetes-prediction:latest
 ```
 
-D. Open RStudio in your browser at:
+G. Open RStudio in your browser at:
 
 http://localhost:8787
 
@@ -253,14 +171,32 @@ Login credentials:
 Username: rstudio  
 Password: printed in the terminal when the container starts
 
-E. To reproduce results:
+H. To reproduce results:
 
-Open scr/predicting_diabetes.Rmd
+Open src/predicting_diabetes.Rmd
 Click Run All
+
+### Running the Pipeline
+
+This project uses a Makefile to automate the analysis workflow.
+
+To run the full pipeline and generate all outputs (including processed data, models, and the final report), run:
+
+```bash
+make all
+```
+
+To remove all generated files and reset the project to a clean state, run:
+
+```bash
+make clean
+```
+
+make clean will delete intermediate and output files so the pipeline can be run again from scratch.
 
 ---
 
-### Dependencies
+## Dependencies
 
 - R version 4.5.2 and R packages:
 - caret=7.0-1
@@ -282,7 +218,7 @@ All package versions and additional dependencies are recorded in the renv.lock f
 
 ---
 
-### License
+## License
 This project is licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA).
 
 Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
@@ -290,5 +226,3 @@ Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
 If re-using or adapting these materials, please provide attribution and link to this repository.
 
 ---
-
-
