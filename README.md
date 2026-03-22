@@ -197,8 +197,18 @@ make clean
 
 make clean will delete intermediate and output files so the pipeline can be run again from scratch.
 
-After cloning the GitHub repository and restoring the environment (if using `renv`) or opening the Docker container, you can run `make clean` to remove previously generated outputs, followed by `make all` to regenerate the most up-to-date results.
+#### Using `renv` locally
 
+After cloning the GitHub repository and restoring the environment, you can run `make clean` to remove previously generated outputs, followed by `make all` to regenerate the most up-to-date results.
+
+#### Using Docker container
+Open a terminal
+```bash
+cd project
+Rscript -e "renv::restore()"   # install all packages from renv.lock
+make clean
+make all
+```
 ---
 
 ## Dependencies
