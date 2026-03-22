@@ -14,6 +14,9 @@ A random forest classification model was developed to capture nonlinear relation
 Can we predict the presence of diabetes in individuals based on clinical and demographic features?
 
 ---
+## Report
+
+The final report can be found [here](https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10/tree/main/reports).
 
 ## Dataset
 
