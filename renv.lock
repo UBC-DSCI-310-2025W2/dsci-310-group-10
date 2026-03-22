@@ -1829,6 +1829,11 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
+    "farff": {
+      "Package": "farff",
+      "Version": "1.1.1",
+      "Source": "Repository"
+    },
     "farver": {
       "Package": "farver",
       "Version": "2.1.2",
