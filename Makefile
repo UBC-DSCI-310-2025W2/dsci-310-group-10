@@ -6,6 +6,9 @@ all: results/eda_plot.png results/final_plot.png \
      results/model.rds data/clean_data.rds \
      reports/predicting_diabetes.html
 
+test:
+	Rscript -e "testthat::test_dir('tests/testthat')"
+
 # Step 1: Load data
 data/clean_data.rds: src/01_load_data.R
 	Rscript src/01_load_data.R 43483 data/clean_data.rds

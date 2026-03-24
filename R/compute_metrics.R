@@ -37,8 +37,15 @@ compute_metrics <- function(predictions, truth) {
     stop("Predictions and truth must have the same factor levels.")
   }
   
-  # Ensure "1" is the positive class
-  cm <- confusionMatrix(predictions, truth, positive = "1")
+  # Define positive class safely
+  positive_class <- "1"
+  
+  # If "1" is not present in data, fallback to another level
+  if (!(positive_class %in% levels(truth))) {
+    positive_class <- levels(truth)[1]
+  }
+  
+  cm <- confusionMatrix(predictions, truth, positive = positive_class)
   
   list(
     accuracy = unname(cm$overall["Accuracy"]),
