@@ -2,9 +2,9 @@
 # date: 2026-03-19
 
 all: results/eda_plot.png results/final_plot.png \
-     results/eda_summary.csv results/final_results.csv \
-     results/model.rds data/clean_data.rds \
-     reports/predicting_diabetes.html
+    results/eda_summary.csv results/final_results.csv \
+    results/model.rds data/clean_data.rds \
+    reports/predicting_diabetes.html
 
 test:
 	Rscript -e "testthat::test_dir('tests/testthat')"
