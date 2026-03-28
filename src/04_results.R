@@ -2,10 +2,10 @@ library(docopt)
 library(caret)
 library(ggplot2)
 library(randomForest)
+library(here)
 
-
-source("R/compute_metrics.R")
-
+source(here("R", "compute_metrics.R"))
+source(here("R", "make_predictions.R"))
 doc <- "
 Usage:
   04_results.R <model_file> <test_data_file> <output_conf_mat> <output_metrics> <output_plot>
@@ -24,7 +24,7 @@ rf_model <- readRDS(model_file)
 test_data <- readRDS(test_data_file)
 
 # Make predictions
-predictions <- predict(rf_model, newdata = test_data)
+predictions <- make_predictions(rf_model, test_data)
 
 # Ensure consistent factor levels
 predictions <- factor(predictions, levels = levels(test_data$Outcome))
