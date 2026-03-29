@@ -1,22 +1,12 @@
-library(tidyverse)
-library(docopt)
 library(OpenML)
 
-doc <- "
-Usage:
-  01_load_data.R <dataset_id> <output_file>
-"
+source("R/load_data.R")
 
-opt <- docopt(doc)
+args <- commandArgs(trailingOnly = TRUE)
 
-dataset_id <- as.numeric(opt$dataset_id)
-output_file <- opt$output_file
+dataset_id <- as.numeric(args[1])
+output_file <- args[2]
 
-# Download dataset from OpenML
-oml_data <- getOMLDataSet(data.id = dataset_id)
+df <- load_diabetes_data(dataset_id)
 
-# Extract dataframe
-df <- oml_data$data
-
-# Save dataset
 saveRDS(df, output_file)
