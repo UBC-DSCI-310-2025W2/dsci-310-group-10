@@ -1,6 +1,7 @@
 library(tidyverse)
 library(docopt)
 library(OpenML)
+library(farff)
 
 source("R/load_data.R")
 
