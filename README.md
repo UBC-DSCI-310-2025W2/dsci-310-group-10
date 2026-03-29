@@ -211,6 +211,25 @@ make all
 ```
 ---
 
+### Running the tests
+This project includes a suite of tests to ensure that core functions and workflows behave as expected. The tests are designed to validate data processing, model performance, and overall pipeline reliability.
+
+To run all tests for this project, run the following code in the terminal:
+
+```bash
+make test
+```
+This command will execute the full test suite and display the results in the console.
+
+#### Requirements
+Ensure all project dependencies are installed before running the tests.
+For R-based tests, required packages (e.g., testthat) should be available in your environment.
+
+#### Notes
+Tests are executed via the Makefile configuration.
+If any tests fail, the output will indicate which tests did not pass and provide details for debugging.
+
+
 ## Dependencies
 
 - R version 4.5.2 and R packages:
