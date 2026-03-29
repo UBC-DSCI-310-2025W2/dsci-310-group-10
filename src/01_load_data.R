@@ -2,7 +2,6 @@ library(tidyverse)
 library(docopt)
 library(OpenML)
 
-
 source("R/load_data.R")
 
 doc <- "

@@ -33,3 +33,4 @@ test_that("load_data fails on invalid input", {
   expect_error(load_data(NULL))
 })
 
+
