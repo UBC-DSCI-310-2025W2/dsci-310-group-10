@@ -1,6 +1,9 @@
 library(docopt)
 library(randomForest)
 library(caret)
+library(here)
+
+source(here("R", "split_data.R"))
 
 doc <- "
 Usage:
@@ -19,13 +22,10 @@ df <- readRDS(input_file)
 # Ensure Outcome is a factor
 df$Outcome <- as.factor(df$Outcome)
 
-set.seed(123)
-
-# Train/test split
-train_index <- createDataPartition(df$Outcome, p = 0.8, list = FALSE)
-
-train_data <- df[train_index, ]
-test_data <- df[-train_index, ]
+# Train/test split using split_data function
+split <- split_data(df, prop = 0.8, seed = 123)
+train_data <- split$train
+test_data <- split$test
 
 # Train random forest model
 rf_model <- randomForest(
