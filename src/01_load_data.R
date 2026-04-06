@@ -4,6 +4,7 @@ library(OpenML)
 library(farff)
 
 source("R/load_data.R")
+source("R/data_validation.R")
 
 doc <- "
 Usage:
@@ -16,5 +17,11 @@ dataset_id <- opt$dataset_id
 output_file <- opt$output_file
 
 df <- load_data(dataset_id)
+
+message("Running data validation checks...")
+
+validate_dataset(df)
+
+message("All validation checks passed.")
 
 saveRDS(df, output_file)
