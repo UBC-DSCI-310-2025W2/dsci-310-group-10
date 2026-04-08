@@ -22,6 +22,4 @@ message("Running data validation checks...")
 
 validate_dataset(df)
 
-message("All validation checks passed.")
-
 saveRDS(df, output_file)
