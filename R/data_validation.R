@@ -1,5 +1,3 @@
-library(tidyverse)
-
 # Expected columns for the dataset
 expected_cols <- c("Pregnancies", "Glucose", "BloodPressure",
                    "SkinThickness", "Insulin", "BMI",
@@ -105,27 +103,30 @@ check_no_duplicates <- function(df) {
 #'
 #' @return No return value. Stops execution if invalid values are detected.
 check_value_ranges <- function(df) {
-  if (any(df$Glucose < 0, na.rm = TRUE)) {
-    stop("Glucose contains negative values.")
+  if (any(df$Glucose < 0 | df$Glucose > 300, na.rm = TRUE)) {
+    stop("Glucose contains unrealistic values.")
   }
-  if (any(df$BMI <= 0, na.rm = TRUE)) {
-    stop("BMI contains non-positive values.")
+  if (any(df$BMI <= 0 | df$BMI > 100, na.rm = TRUE)) {
+    stop("BMI contains unrealistic values.")
   }
-  if (any(df$Age <= 0, na.rm = TRUE)) {
-    stop("Age contains non-positive values.")
+  if (any(df$Age <= 0 | df$Age > 120, na.rm = TRUE)) {
+    stop("Age contains unrealistic values.")
   }
 }
 
 #' Check outcome variable levels
 #'
-#' Ensures that the Outcome variable contains only valid category values (0 or 1).
+#' Ensures that the Outcome variable contains only valid category values (0 or 1),
+#' excluding missing values from the check.
 #'
 #' @param df A data frame to validate.
 #'
 #' @return No return value. Stops execution if invalid category levels are found.
 check_outcome_levels <- function(df) {
   valid_levels <- c(0, 1)
-  if (!all(unique(df$Outcome) %in% valid_levels)) {
+  outcome_values <- unique(df$Outcome[!is.na(df$Outcome)])
+  
+  if (!all(outcome_values %in% valid_levels)) {
     stop("Outcome contains invalid category levels.")
   }
 }
