@@ -41,7 +41,8 @@ git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
 cd dsci-310-group-10
 Rscript -e "install.packages('renv'); renv::restore()"
 make clean
-make all ```
+make all 
+```
 
 ### 1. Using renv
 
@@ -131,7 +132,7 @@ Password: yourpassword123
 
 H. To reproduce results:
 
-Open src/predicting_diabetes.Rmd
+Open reports/predicting_diabetes.Rmd
 Click Run All
 
 
@@ -181,11 +182,11 @@ http://localhost:8787
 
 Login credentials:
 Username: rstudio  
-Password: printed in the terminal when the container starts
+Password: yourpassword123
 
 H. To reproduce results:
 
-Open src/predicting_diabetes.Rmd
+Open reports/predicting_diabetes.Rmd
 Click Run All
 
 ### Running the Pipeline
@@ -213,7 +214,7 @@ After cloning the GitHub repository and restoring the environment, you can run `
 #### Using Docker container
 Open a terminal
 ```bash
-cd project
+cd dsci-310-group-10
 Rscript -e "renv::restore()"   # install all packages from renv.lock
 make clean
 make all
