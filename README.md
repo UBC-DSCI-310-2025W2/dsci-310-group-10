@@ -34,6 +34,15 @@ This project uses `renv` for reproducible package management.
 
 ## Usage (pick one method from below)
 
+## Quick Start (Recommended)
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+cd dsci-310-group-10
+Rscript -e "install.packages('renv'); renv::restore()"
+make clean
+make all ```
+
 ### 1. Using renv
 
 A. Open your terminal.
@@ -67,7 +76,7 @@ F. Running the Analysis
 The complete analysis is located in:
 
 ```
-src/predicting_diabetes.Rmd
+reports/predicting_diabetes.Rmd
 ```
 
 G. To reproduce results:
