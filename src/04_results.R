@@ -1,3 +1,8 @@
+# Script: 04_results.R
+# Description: Evaluates model and generates final results.
+# Input: results/model.rds, results/test_data.rds
+# Output: results/final_results.csv, results/final_plot.png
+# Usage: Rscript src/04_results.R results/model.rds results/test_data.rds results/conf_mat.rds results/final_results.csv results/final_plot.png
 library(docopt)
 library(caret)
 library(ggplot2)

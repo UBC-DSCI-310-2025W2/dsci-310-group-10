@@ -1,3 +1,8 @@
+# Script: 03_model.R
+# Description: Trains machine learning model using processed data.
+# Input: data/processed_data.rds
+# Output: results/model.rds, results/test_data.rds
+# Usage: Rscript src/03_model.R data/processed_data.rds results/model.rds results/test_data.rds
 library(docopt)
 library(randomForest)
 library(caret)
