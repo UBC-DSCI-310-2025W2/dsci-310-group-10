@@ -18,8 +18,9 @@
 #' levels.
 #'
 #' @examples
+#' library(caret)
 #' preds <- factor(c(1, 0, 1, 1))
-#' actual <- factor(c(1, 0, 0, 1))
+#' actual <- factor(c(1, 0, 0, 1), levels = levels(preds))
 #' compute_metrics(preds, actual)
 #'
 #' @export

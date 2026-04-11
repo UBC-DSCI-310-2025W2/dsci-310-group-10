@@ -10,6 +10,16 @@
 #' \item{train}{training data frame}
 #' \item{test}{test data frame}
 #'
+#' @examples
+#' sample_data <- data.frame(
+#'   x = 1:10,
+#'   y = rnorm(10)
+#' )
+#' split <- split_data(sample_data, prop = 0.7, seed = 123)
+#' names(split)
+#' nrow(split$train)
+#' nrow(split$test)
+#'
 #' @export
 split_data <- function(data, prop = 0.8, seed = 123) {
 
