@@ -1,3 +1,8 @@
+# Script: 02_methods.R
+# Description: Performs data cleaning and exploratory data analysis.
+# Input: data/clean_data.rds
+# Output: data/processed_data.rds, results/eda_plot.png, results/eda_summary.csv
+# Usage: Rscript src/02_methods.R data/clean_data.rds data/processed_data.rds results/eda_plot.png results/eda_summary.csv
 library(docopt)
 library(tidyverse)
 library(GGally)

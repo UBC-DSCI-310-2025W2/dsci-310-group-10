@@ -91,12 +91,14 @@ summary(df)
 ```
 **Table 2: Baseline characteristics of participants included in the diabetes dataset, presented as minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable**
 
-Dataset Overview
-- Total Observations: Not shown directly, but typical for this dataset is 768 rows.
-- Target Variable: Outcome (binary: 0 = no diabetes, 1 = diabetes).
-- Mean Outcome: 0.349. About 34.9% of the patients in the dataset have diabetes.
+DDataset Overview:
+- Total observations: 768  
+- Target variable: Outcome (0 = no diabetes, 1 = diabetes)  
+- Proportion of patients with diabetes: 34.9%
 
-Potential issue to address: Class Imbalance: Only ~35% of cases are diabetic, so model evaluation should consider metrics like precision, recall, or F1-score.
+About 34.9% of the patients in the dataset are labeled as having diabetes.
+
+A potential challenge in this dataset is class imbalance. Approximately 35% of observations are labeled as diabetic, while the remaining 65% are labeled as non-diabetic. Because of this imbalance, accuracy alone is not enough to assess model performance. For that reason, we also report precision, recall, and F1 score, which provide a better picture of how well the model identifies the minority diabetic class.
 
 ```{r, fig.width=12, fig.height=10}
 # Ensure Outcome is a factor for coloring
@@ -206,21 +208,34 @@ metrics_table
 
 **Table 3. Performance metrics for the random forest model predicting diabetes on the test dataset, including accuracy, precision, recall, and F1 score.**
 
-The model demonstrates exceptional performance with an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. The high recall (94.0%) is particularly noteworthy as it indicates the model successfully identifies 94% of actual diabetes cases, missing only 6% of positive patients. The precision of 89.5% means that when the model predicts diabetes, it is correct nearly 90% of the time, resulting in relatively few false alarms. The excellent F1 score of 91.7% confirms a strong balance between precision and recall, making this model highly reliable for both detecting diabetes and minimizing unnecessary follow ups. Overall, this model achieves a clinically useful balance suitable for diagnostic support.
-
+The model performed well on the held-out test set, with an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. The high recall suggests that the model identified most diabetes cases in this particular test split, which is valuable in a screening-oriented setting where missed positive cases are especially concerning. The precision and F1 score also suggest a reasonably strong balance between identifying true diabetes cases and limiting false positives. However, these results should be interpreted as performance on this dataset and test split, rather than as evidence that the model would perform equally well in broader clinical settings.
 # Discussion
 
-In this analysis, we developed a random forest classification model to predict diabetes status using clinical and physiological predictors. The model demonstrated strong performance, achieving an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. Notably, the high recall indicates that the model correctly identified the vast majority of individuals with diabetes, missing only a small proportion of true cases. This is particularly important in a clinical screening context, where failing to detect true positive cases can delay diagnosis and treatment. The strong F1 score further confirms that the model maintains a well-balanced trade-off between sensitivity and precision.
+## Interpretation of Findings
 
-These results are somewhat consistent with expectations. Random forest models are known to perform well on structured clinical datasets because they can capture nonlinear relationships and interactions among variables without requiring strong parametric assumptions. 
+In this analysis, we developed a random forest classification model to predict diabetes status using clinical and physiological predictors. On the held-out test set, the model achieved an accuracy of 88.9%, precision of 89.5%, recall of 94.0%, and an F1 score of 91.7%. These results suggest that the model performed well on this dataset, especially in terms of recall, meaning that it identified most of the diabetes cases in the test set.
 
-The potential impact of such findings is meaningful in the context of early detection and screening. A model with high recall could support clinical decision-making by identifying high-risk individuals who may benefit from further diagnostic testing or preventive interventions. In resource-limited settings, predictive tools like this could help prioritize follow-up testing for individuals most likely to have diabetes. However, while the performance metrics are strong, this model should not be interpreted as a replacement for clinical diagnosis but rather as a supportive risk stratification tool.
+Random forest models are well-suited for structured clinical data because they can capture nonlinear relationships and interactions between variables without strong assumptions. The findings are consistent with the exploratory analysis, where glucose, BMI, age, and pregnancies appeared to be among the most informative predictors.
 
-Importantly, the dataset used in this analysis includes only female participants. This is a significant limitation. Biological sex influences insulin sensitivity, fat distribution, hormonal regulation, and cardiovascular risk profiles, all of which contribute to diabetes development. As highlighted by Kautzky-Willer, Leutner, and Harreiter (2023), there are well-documented sex differences in the pathophysiology, risk factors, and clinical presentation of type 2 diabetes. Therefore, a model trained exclusively on female data may not generalize to males or mixed populations. Future work should incorporate sex as a biological variable and evaluate whether predictive performance differs between males and females. Sex-specific models or interaction analyses may improve both accuracy and clinical relevance.
+## Limitations
 
-These findings raise several additional future questions. First, how would this model perform on external validation datasets from different populations or healthcare settings? Second, would incorporating additional biomarkers, such as lipid profiles or inflammatory markers, improve predictive power? Third, could more advanced ensemble methods (e.g., gradient boosting) outperform random forests in this context? Finally, beyond prediction, future studies could explore interpretability methods (e.g., feature importance ranking or SHAP values) to better understand which risk factors most strongly drive model decisions.
+This analysis has several limitations. First, the dataset includes only female participants, which limits how well the model may generalize to males or broader populations.
 
-Overall, this study demonstrates that machine learning approaches can effectively predict diabetes status using clinical data, but broader validation and consideration of sex differences are necessary before clinical implementation.
+Second, the model was evaluated using a single 80/20 train-test split. This means the reported performance depends on one specific partition of the data and may vary with different splits.
+
+Third, the dataset shows class imbalance, with fewer diabetes cases than non-diabetes cases. While we reported precision, recall, and F1 score to address this, we did not apply additional techniques such as resampling or class weighting.
+
+Finally, the model was not validated on external datasets, so its performance in real-world settings remains uncertain.
+
+## Future Work
+
+Future work could improve this analysis by using cross-validation to obtain more stable performance estimates. Comparing the random forest model with other models such as logistic regression or gradient boosting could also provide additional insights.
+
+Addressing class imbalance through resampling or threshold tuning may further improve model performance. In addition, testing the model on external datasets would help evaluate generalizability.
+
+## Conclusion
+
+Overall, this study shows that machine learning models can predict diabetes status reasonably well within this dataset. The model achieved strong performance, particularly in recall, suggesting potential value for identifying individuals at elevated risk. However, due to dataset limitations, class imbalance, the use of a single train-test split, and lack of external validation, the results should be interpreted cautiously.
 
 # References 
 - “OpenML.” Openml.org, 2025, www.openml.org/search?type=data&id=43483&sort=runs&status=active.

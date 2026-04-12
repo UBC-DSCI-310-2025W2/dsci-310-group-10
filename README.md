@@ -34,6 +34,16 @@ This project uses `renv` for reproducible package management.
 
 ## Usage (pick one method from below)
 
+## Quick Start (Recommended)
+
+```bash
+git clone https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-10.git
+cd dsci-310-group-10
+Rscript -e "install.packages('renv'); renv::restore()"
+make clean
+make all 
+```
+
 ### 1. Using renv
 
 A. Open your terminal.
@@ -67,7 +77,7 @@ F. Running the Analysis
 The complete analysis is located in:
 
 ```
-src/predicting_diabetes.Rmd
+reports/predicting_diabetes.Rmd
 ```
 
 G. To reproduce results:
@@ -122,7 +132,7 @@ Password: yourpassword123
 
 H. To reproduce results:
 
-Open src/predicting_diabetes.Rmd
+Open reports/predicting_diabetes.Rmd
 Click Run All
 
 
@@ -172,11 +182,11 @@ http://localhost:8787
 
 Login credentials:
 Username: rstudio  
-Password: printed in the terminal when the container starts
+Password: yourpassword123
 
 H. To reproduce results:
 
-Open src/predicting_diabetes.Rmd
+Open reports/predicting_diabetes.Rmd
 Click Run All
 
 ### Running the Pipeline
@@ -204,7 +214,7 @@ After cloning the GitHub repository and restoring the environment, you can run `
 #### Using Docker container
 Open a terminal
 ```bash
-cd project
+cd dsci-310-group-10
 Rscript -e "renv::restore()"   # install all packages from renv.lock
 make clean
 make all
@@ -213,6 +223,15 @@ make all
 
 ### Running the tests
 This project includes a suite of tests to ensure that core functions and workflows behave as expected. The tests are designed to validate data processing, model performance, and overall pipeline reliability.
+
+#### Test Coverage
+
+The test suite validates key components of the pipeline:
+
+- `load_data()`: checks input validation and data retrieval  
+- `split_data()`: verifies correct train/test splitting  
+- `make_predictions()`: ensures predictions are generated correctly  
+- `compute_metrics()`: validates accuracy, precision, recall, and F1 calculations  
 
 To run all tests for this project, run the following code in the terminal:
 
