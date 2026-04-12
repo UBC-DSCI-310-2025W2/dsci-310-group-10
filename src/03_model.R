@@ -7,8 +7,7 @@ library(docopt)
 library(randomForest)
 library(caret)
 library(here)
-
-source(here("R", "split_data.R"))
+library(diabetestools)
 
 doc <- "
 Usage:
@@ -27,12 +26,10 @@ df <- readRDS(input_file)
 # Ensure Outcome is a factor
 df$Outcome <- as.factor(df$Outcome)
 
-# Train/test split using split_data function
 split <- split_data(df, prop = 0.8, seed = 123)
 train_data <- split$train
 test_data <- split$test
 
-# Train random forest model
 rf_model <- randomForest(
   Outcome ~ .,
   data = train_data,
