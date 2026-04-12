@@ -18,9 +18,8 @@
 #' levels.
 #'
 #' @examples
-#' library(caret)
-#' preds <- factor(c(1, 0, 1, 1))
-#' actual <- factor(c(1, 0, 0, 1), levels = levels(preds))
+#' preds <- factor(c(1, 0, 1, 1), levels = c(0, 1))
+#' actual <- factor(c(1, 0, 0, 1), levels = c(0, 1))
 #' compute_metrics(preds, actual)
 #'
 #' @export
@@ -46,7 +45,7 @@ compute_metrics <- function(predictions, truth) {
     positive_class <- levels(truth)[1]
   }
   
-  cm <- confusionMatrix(predictions, truth, positive = positive_class)
+  cm <- caret::confusionMatrix(predictions, truth, positive = positive_class)
   
   list(
     accuracy = unname(cm$overall["Accuracy"]),

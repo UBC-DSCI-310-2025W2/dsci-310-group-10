@@ -26,11 +26,3 @@ test_that("load_data fails on invalid input", {
   expect_error(load_data(NA))
   expect_error(load_data(NULL))
 })
-
-test_that("load_data fails on invalid input", {
-  
-  expect_error(load_data(NA))
-  expect_error(load_data(NULL))
-})
-
-

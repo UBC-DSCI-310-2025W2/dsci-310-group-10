@@ -15,8 +15,9 @@
 #' critical for reproducible pipelines.
 #'
 #' @examples
-#' # Assuming 'final_model' and 'test_data' are loaded:
-#' # preds <- make_predictions(final_model, test_data)
+#' model <- glm(vs ~ mpg, data = mtcars, family = binomial)
+#' preds <- make_predictions(model, mtcars)
+#' length(preds)
 #'
 #' @export
 make_predictions <- function(model, new_data) {

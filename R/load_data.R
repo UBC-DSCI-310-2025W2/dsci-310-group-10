@@ -4,8 +4,7 @@
 #'
 #' @param dataset_id Numeric OpenML dataset ID. For this project, use 43483.
 #'
-#' @return A data.frame containing the dataset, including predictor variables
-#' such as Glucose, BMI, Age, and the target variable Outcome.
+#' @return A data.frame containing predictors and the target variable "Outcome".
 #'
 #' @details This function requires an internet connection to download data from OpenML.
 #'
