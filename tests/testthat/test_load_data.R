@@ -1,5 +1,4 @@
 library(testthat)
-library(caret)
 library(here)
 source(here("R", "load_data.R"))
 
@@ -14,11 +13,11 @@ test_that("load_data returns a data frame", {
 })
 
 
-test_that("load_data returns consistent structure", {
-  
+test_that("load_data returns named columns", {
   df <- load_data(61)
-  
-  expect_named(df)
+
+  expect_false(is.null(names(df)))
+  expect_true(all(names(df) != ""))
 })
 
 test_that("load_data fails on invalid input", {
