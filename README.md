@@ -224,6 +224,15 @@ make all
 ### Running the tests
 This project includes a suite of tests to ensure that core functions and workflows behave as expected. The tests are designed to validate data processing, model performance, and overall pipeline reliability.
 
+#### Test Coverage
+
+The test suite validates key components of the pipeline:
+
+- `load_data()`: checks input validation and data retrieval  
+- `split_data()`: verifies correct train/test splitting  
+- `make_predictions()`: ensures predictions are generated correctly  
+- `compute_metrics()`: validates accuracy, precision, recall, and F1 calculations  
+
 To run all tests for this project, run the following code in the terminal:
 
 ```bash
